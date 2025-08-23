@@ -15,9 +15,13 @@
                 <p id="email-error" class="text-red-600 text-xs mb-1 invisible">Не верно введена почта</p>
                 <input id="auth-form-email" type="text" name="email" placeholder="Введите почту" class="border border-gray-50/50 rounded-xl text-white px-3 py-2 w-full">
             </div>
-            <div>
+            <div class="relative mb-6" >
                 <p id="password-error" class="text-red-600 text-xs mb-1 invisible">Не верный пароль</p>
                 <input id="auth-form-password" disabled type="password" name="password" placeholder="Введите пароль" class="border border-gray-50/50 rounded-xl text-white px-3 py-2 disabled:opacity-50 w-full">
+                <input type="checkbox" id="show-password" class="absolute right-3 bottom-1/10 -translate-y-1/6 w-5 h-5 appearance-none cursor-pointer bg-[url('https://api.iconify.design/ic:outline-remove-red-eye.svg?color=%23999999')]
+                bg-no-repeat">
+                <input id="hide-password" type="checkbox" class="hidden absolute right-3 bottom-1/10 -translate-y-1/6 w-5 h-5 appearance-none cursor-pointer 
+                bg-[url('https://api.iconify.design/ion:eye-off-outline.svg?color=%23999999')] bg-no-repeat">
             </div>
             
             <input id="auth-form-submit" type="submit" value="Войти" class=" rounded-md bg-blue-500 hover:bg-blue-700 text-white px-3 py-2 cursor-pointer disabled:opacity-50 disabled:bg-blue-500" disabled>

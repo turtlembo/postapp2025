@@ -4,6 +4,8 @@ const authFormPassword = document.querySelector("#auth-form-password");
 const authFormSubmit = document.querySelector("#auth-form-submit");
 const emailError = document.querySelector("#email-error");
 const passwordError = document.querySelector("#password-error");
+const showPassword = document.querySelector("#show-password");
+const hidePassword = document.querySelector("#hide-password");
 const validationRules = {
     emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     passwordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{4,}$/,
@@ -51,4 +53,11 @@ authFormPassword.addEventListener('input', (e)=>{
         passwordError.classList.remove("invisible");
     }
     checkSubmitDisabled();
+});
+
+showPassword.addEventListener('change', ()=>{
+    console.log(123);
+    authFormPassword.type = "text";
+    showPassword.classList.add("hidden");
+    hidePassword.classList.remove("hidden")
 })
