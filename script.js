@@ -4,8 +4,8 @@ const authFormPassword = document.querySelector("#auth-form-password");
 const authFormSubmit = document.querySelector("#auth-form-submit");
 const emailError = document.querySelector("#email-error");
 const passwordError = document.querySelector("#password-error");
-const showPassword = document.querySelector("#show-password");
-const hidePassword = document.querySelector("#hide-password");
+const togglePasswordVisibility = document.querySelector("#toggle-password-visibility");
+
 const validationRules = {
     emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     passwordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{4,}$/,
@@ -14,6 +14,11 @@ const validationRules = {
 const formValidation = {
     email: false,
     password: false,
+}
+
+const passwordIcons = {
+    eyeOpen: "url(https://api.iconify.design/ic:outline-remove-red-eye.svg?color=%23999999)",
+    eyeClose: "url(https://api.iconify.design/ion:eye-off-outline.svg?color=%23999999)",
 }
 
 const checkSubmitDisabled = () =>{
@@ -45,6 +50,12 @@ authFormEmail.addEventListener('input', (e)=>{
     checkSubmitDisabled(); 
 })
 authFormPassword.addEventListener('input', (e)=>{
+    if(e.target.value){
+        togglePasswordVisibility.classList.remove("hidden");
+    }else{
+        togglePasswordVisibility.classList.add("hidden");
+    }
+    
     if(e.target.value.match(validationRules.passwordRegex)){
         formValidation.password=true;
         passwordError.classList.add("invisible");
@@ -55,9 +66,15 @@ authFormPassword.addEventListener('input', (e)=>{
     checkSubmitDisabled();
 });
 
-showPassword.addEventListener('change', ()=>{
-    console.log(123);
-    authFormPassword.type = "text";
-    showPassword.classList.add("hidden");
-    hidePassword.classList.remove("hidden")
+togglePasswordVisibility.addEventListener('click', (e)=>{
+    if(e.target.dataset.visibility === "true"){
+        authFormPassword.type = "password";
+        e.target.style.backgroundImage = passwordIcons.eyeOpen
+        e.target.dataset.visibility = "false";
+    } else{
+        authFormPassword.type = "text";
+        e.target.style.backgroundImage = passwordIcons.eyeClose;
+        e.target.dataset.visibility = "true";
+    }
+    authFormPassword.focus();
 })
