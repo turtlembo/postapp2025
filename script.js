@@ -5,6 +5,8 @@ const authFormSubmit = document.querySelector("#auth-form-submit");
 const emailError = document.querySelector("#email-error");
 const passwordError = document.querySelector("#password-error");
 const togglePasswordVisibility = document.querySelector("#toggle-password-visibility");
+const alertError = document.querySelector("#alert-error");
+const alertClose = document.querySelector("#alert-close")
 
 const users = [
     {email: 'user1@mail.ru', password:'Domr4532'},
@@ -22,6 +24,8 @@ const formValidation = {
     email: false,
     password: false,
 }
+
+let isAlertErrorVisible = false;
 
 const passwordIcons = {
     eyeOpen: "url(https://api.iconify.design/ic:outline-remove-red-eye.svg?color=%23999999)",
@@ -53,11 +57,18 @@ authForm.addEventListener('submit', (e)=>{
     //  }
         const isUser = users.find((user)=> formData.email === user.email && formData.password === user.password
         )
-        console.log(isUser);
+        if(!isUser){
+            alertError.classList.remove("opacity-0");
+            isAlertErrorVisible = true;
+            if(isAlertErrorVisible){
+                setTimeout(()=>{
+                    alertError.classList.add("opacity-0");
+                },7000)
+            }
+        }else{
+            alert("aaaa")
+        }
     }
-    
-    
-
 })
 authFormEmail.addEventListener('input', (e)=>{
     if (e.target.value.match(validationRules.emailRegex)){
@@ -100,3 +111,8 @@ togglePasswordVisibility.addEventListener('click', (e)=>{
     }
     authFormPassword.focus();
 })
+ alertClose.addEventListener('click', ()=>{
+    if(isAlertErrorVisible){
+        alertError.classList.add("opacity-0");
+    }
+ })
