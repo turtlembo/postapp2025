@@ -1,4 +1,5 @@
-const postsWrapper = document.querySelector("#posts-wrapper")
+const postsWrapper = document.querySelector("#posts-wrapper");
+const favouriteList = document.querySelector("#favourite-list");
 const posts = [
   {
     id: 1,
@@ -51,12 +52,12 @@ const posts = [
     description: "Процесс развертывания веб-приложений на различных хостинг-платформах и серверах."
   }
 ];
+const favourites = []
 
 const renderPosts = ()=>{
   let markup = '';
-
     posts.forEach((post)=>{
-      markup += `<div data-id = "${post.id}" class="border border-white rounded-2xl p-3 w-100   h-50 flex gap-2 flex-col">
+      markup += `<div data-id = "${post.id}" class="post border border-white rounded-2xl p-3 w-100  min-h-50 flex gap-2 flex-col">
               <h3 class="text-white text-xl font-bold">${post.title}</h3>
               <p class="text-white">${post.description}</p>
               <button class=" rounded-2xl bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 cursor-pointer disabled:opacity-45 disabled:bg-blue-700 disabled:cursor-auto">Добавить в избранное</button>
@@ -64,4 +65,63 @@ const renderPosts = ()=>{
   });
   postsWrapper.insertAdjacentHTML('afterbegin', markup);
 }
-document.addEventListener("DOMContentLoaded", renderPosts);
+
+document.addEventListener("DOMContentLoaded", () =>{
+  renderPosts();
+
+  postsWrapper.addEventListener('click', (e) =>{
+    if (e.target.matches(".post button")){ ///делегирование запомни уже!!!
+      const id = Number(e.target.parentElement.dataset.id) ;
+      // posts.forEach(post =>{
+      //   if(Number(id) === post.id){
+      //     const favouritePostMarkup = 
+      //     `<li data-id="${post.id}" class="rounded-2xl bg-blue-700 p-3 px-5 flex justify-between">
+      //           <span>${post.title}</span>
+      //           <button class="cursor-pointer">✕</button>
+      //     </li>`;
+      //     favouriteList.insertAdjacentHTML("beforeend", favouritePostMarkup);
+      //   }
+      // });     
+      // const post = posts.find(post =>{
+      //   if (Number(id) === post.id){
+      //     return post;
+      //   }
+      // })
+      if(!favourites.includes(id)){
+        const post = posts.find((post) => id === post.id);
+        if(post?.id){
+          favourites.push(post.id);
+          const favouritePostMarkup = 
+          `<li data-id="${post.id}" class="rounded-2xl bg-blue-700 p-3 px-5 flex justify-between">
+          <span>${post.title}</span>
+          <button class="cursor-pointer delete-favourite">✕</button>
+          </li>`;
+          favouriteList.insertAdjacentHTML("beforeend", favouritePostMarkup);
+        } else{
+          alert('Ошибка(')
+        }
+      }
+
+    }
+  })
+
+  favouriteList.addEventListener('click', (e)=>{
+    if(e.target.matches(".delete-favourite")){
+      const id = Number(e.target.parentElement.dataset.id);
+      // const post = favourites.find((el)=> Number(id)===el);
+      const ind = favourites.indexOf(id);
+      if(ind !== -1){
+        favourites.splice(ind,1);
+        e.target.parentElement.remove()
+      }else{
+        alert('Ощибка(')
+      }
+
+      console.log(favourites);
+      
+      
+      
+    }
+  })
+});
+
