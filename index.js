@@ -12,10 +12,10 @@ let authForm,
 const wrapper = document.querySelector("#wrapper")
 
 const users = [
-    {email: 'user1@mail.ru', password:'Domr4532'},
-    {email: 'user1@mail.ru', password:'Domr4532'},
-    {email: 'user2@mail.ru', password:'Domr3332'},
-    {email: 'user3@mail.ru', password:'Domr32312'},
+    {id:1, email: 'user1@mail.ru', password:'Domr4532'},
+    {id:2, email: 'user1@mail.ru', password:'Domr4532'},
+    {id:3, email: 'user2@mail.ru', password:'Domr3332'},
+    {id:4, email: 'user3@mail.ru', password:'Domr32312'},
 ]
 
 const validationRules = {
@@ -24,7 +24,7 @@ const validationRules = {
 }
 
 const formValidation = {
-    email: false,
+    email: false, 
     password: false,
 }
 
@@ -120,6 +120,8 @@ const init = (formType) =>{
               }, 7000);
             }
           } else {
+            /////Устав=новить куки
+            document.cookie = `authUser=${isUser.id}; path=/; max-age=3600`
             location.href = "posts.html"
           }
         }else if(formType === formTypes[1]){
@@ -200,3 +202,6 @@ document.addEventListener('DOMContentLoaded', () =>{
     render(authFormMarkUp);
     init(formTypes[0]);
 });
+
+// console.log(document.cookie);
+ 
